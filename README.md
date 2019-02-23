@@ -164,9 +164,17 @@ var vm2 = new Vue({
 
 > 同樣，打開瀏覽器的DevTools的console，輸入`vm2.message = '新提示訊息';`，就會看到這個綁定了`title`屬性的`DOM`節點已經更新了。
 
-## 什麼是Vue.js？
+## `Vue.js`兩大核心
+### 1. 資料驅動(Data-driven)
+資料的改變驅動畫面的自動更新，傳統的做法得手動改變`DOM`來改變，用`Vue.js`只需要改變資料，就會自動改變。再也不用去操心`DOM`的更新了，這就是MVVM思想的實現。
+![](https://vuejs.org/images/mvvm.png)
 
-## 為什麼是Vue.js？
+### 2. 模組化(Components)，又譯作『組件化』
+把整一個網頁的拆分成一個又一個區塊，每個區塊我們可以看作成一個元件。網頁由多個元件拼接或巢狀組成。如下圖：
+![](https://cn.vuejs.org/images/components.png)
+
+## `Vue.js`生命週期圖(Lifecycle Diagram)
+![](https://vuejs.org/images/lifecycle.png)
 
 ## 0 起步
 跟`jQuery`一樣方便，創建一個`HTML`檔，引入`Vue.js`的CDN：
@@ -184,8 +192,3 @@ var vm2 = new Vue({
 這是使用`Vue.js`最快最簡單的方式。
 
 > 有一種`Vue.js`的開發工具：`Vue CLI`，但是不推薦`Vue.js`新手使用。
-
-### 1. Download this repository
-```
-git clone https://github.com/framework7io/framework7-template-vue-webpack my-app
-```
