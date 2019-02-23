@@ -1,8 +1,10 @@
 # 10802247-Vue-Share
 參考：Vue.js 官方文檔 [英文](https://vuejs.org/v2/guide/) [簡體中文](https://cn.vuejs.org/v2/guide/)
 
+## 3 使用者輸入
+
 ## 2 條件與循環(`if`, `for`)
-切換一個元素要不要顯示也是一樣超級簡單：
+用`v-if`切換一個元素要不要顯示，超級方便，超級簡單：
 ```html
 <div id="app-3">
   <p v-if="seen">
@@ -23,9 +25,39 @@ var vm = new Vue({
 
 > 打開瀏覽器的DevTools的console，輸入`vm.seen = false;`，就會發現之前顯示的消息消失了。
 
-實作這個例子後會發現不僅可以把資料綁定到`DOM`節點或是它的屬性，還可以綁定到`DOM`結構。
+實作這個例子後會發現不僅可以把資料綁定到`DOM`的屬性，還可以綁定到`DOM`結構。
 
-此外，`Vue`也提供一個強大的[過渡效果](https://vuejs.org/v2/guide/transitions.html)，可以在`Vue`插入/更新/移除元素時自動應用。
+此外，`Vue`也提供強大的[過渡效果](https://vuejs.org/v2/guide/transitions.html)，可以在`Vue`插入/更新/移除元素時自動應用。
+
+用`v-for`綁定陣列的資料來渲染一個項目列表：
+```html
+<div id="app-4">
+  <ol>
+    <li v-for="todo in todos">
+      {{ todo.text }}
+    </li>
+  </ol>
+</div>
+```
+
+```javascript
+// JavaScript
+var vm = new Vue({
+  el: '#app-4',
+  data: {
+    todos: [
+      { text: '學HTML' },
+      { text: '學CSS' },
+      { text: '學JavaScript' },
+      { text: '學PHP' }
+    ]
+  }
+});
+```
+
+`v-for`的做法就像是我們熟知的`forEach`一樣。
+
+> 打開瀏覽器的DevTools的console，輸入`vm.todos.push({ text: '學不完' });`，就會發現列表最後添加了一個新項目。。
 
 ## 1 聲明式渲染(Declarative Rendering)
 `Vue.js`的其中一個核心是允許我們用簡單的模板語法來聲明式地將資料渲染到`DOM`節點上：
