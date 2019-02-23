@@ -1,5 +1,96 @@
 # 10802247-Vue-Share
-參考：Vue.js 官方文檔 [英文](https://vuejs.org/v2/guide/) [簡體中文](https://cn.vuejs.org/v2/guide/)
+參考：
+1. Vue.js 官方文檔 [英文](https://vuejs.org/v2/guide/) [簡體中文](https://cn.vuejs.org/v2/guide/)
+2. [Summer。桑莫。夏天](https://cythilya.github.io/)
+
+## 4 模組化(Components)
+在`Vue`裡，每個模組是一個擁有預定義選項的一個`Vue`實例。在`Vue`中註冊模組很簡單：
+```javascript
+// 註冊一個叫做 todo-item 的新模組
+Vue.component('todo-item', {
+  template: '<li>這是一個待辦事項。</li>'
+});
+```
+
+然後就可以把它建構在另一個模組模板上：
+```html
+<ol>
+  <!-- 創建一個 todo-item 模組的實例 -->
+  <todo-item></todo-item>
+</ol>
+```
+
+但是這樣會發生一種情況：每個渲染出來的待辦事項都一樣。
+
+???這似乎不太優，所以要有個我們應該能從父作用域將數據傳到子模組才對。讓我們來修改一下組件的定義，使之能夠接受一個prop：
+```javascript
+Vue.component('todo-item', {
+  // todo-item 模組現在接受一個 'prop'，
+  // 它就像是自己定義出來的屬性，
+  // 我們把這個 prop 取做 todo
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+});
+```
+
+這時候就要使用`v-bind`來把待辦事項和`todo-item`模組綁定，才能讓父模組把資料傳給每個子模組：
+```html
+<div id="app-7">
+  <ol>
+    <!--
+      我們為每個 todo-item 提供 todo 對象
+      todo 的對象是變量，換言之，它的內容是可以動態改變的。
+    -->
+    <todo-item
+      v-for="item in groceryList"
+      v-bind:todo="item"
+      v-bind:key="item.id"
+    ></todo-item>
+  </ol>
+</div>
+```
+
+```javascript
+Vue.component('todo-item', {
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+});
+
+var vm = new Vue({
+  el: '#app-7',
+  data: {
+    groceryList: [
+      { id: 0, text: '牛肉湯' },
+      { id: 1, text: '肉燥飯' },
+      { id: 2, text: '陽春麵' }
+    ]
+  }
+});
+```
+
+由於效能考量，在預設的狀況下，`Vue`會儘量重覆使用已經渲染好的元素。若不設定`key`值，不會重新渲染元素，只會部份更新。
+
+> 在初始畫面中，使用者分別在每個輸入框中輸入文字。當元素的順序改變後，雖然元素被更新，但使用者的輸入會被保留，這是因為元素並沒有被重新渲染，而只是部份更新而已。每個`<li>`都使用`v-bind`綁定一個屬性`key`並設定唯一值，目的是要確保每個元素的唯一性。當元素更新時，例如改變順序，有可識別唯一性的`key`來確保我們有正確地重新渲染。
+
+#### 模組之間的溝通
+![](https://cdn-images-1.medium.com/max/800/0*Xzkw0-T4Uea3d5Yh.png)
+
+[圖片來源](https://medium.com/@sky790312/about-vue-2-parent-to-child-props-af3b5bb59829)
+
+<br>
+
+在一個大型網站和應用程式中，是有必要把整個應用程序劃分為好多個模組，以使開發過程中更容易管理，完成之後更容易維護。
+
+> E.g.
+```html
+<div id="app">
+  <app-nav></app-nav>
+  <app-view>
+    <app-sidebar></app-sidebar>
+    <app-content></app-content>
+  </app-view>
+</div>
+```
 
 ## 3 使用者輸入
 為了讓使用者和網站或應用程式互動，可以用`v-on`指令添加一個事件監聽器(Event listener)，通過它調用在`Vue`實例中定義的方法(Methods)：
@@ -25,7 +116,8 @@ var vm = new Vue({
 });
 ```
 
-**注意** 在`reverseMessage()`方法中，我們更新了前端的資訊，但沒有動到`DOM`節點，所有的`DOM`操作都由`Vue`來處理，我們在 coding 的時候只需要關注邏輯層面就好了。
+#### 注意
+在`reverseMessage()`方法中，我們更新了前端的資訊，但沒有動到`DOM`節點，所有的`DOM`操作都由`Vue`來處理，我們在 coding 的時候只需要關注邏輯層面就好了。
 
 `Vue`還提供了`v-model`指令，它能輕鬆實現表單輸入和應用狀態之間的雙向綁定，超級方便：
 ```html
