@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <!-- Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-firestore.js"></script>
+
+        <!-- Vue.js -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.6/dist/vue.js"></script>
+
+        <link rel="stylesheet" href="styles.css">
+        <title>Cloud Cafe</title>
+    </head>
+    <body>
+
+        <h1>Cloud Cafe</h1>
+
+        <div id="app">
+            <form>
+                <input type="button" value="Switch Mode" v-on:click="switchMode">
+            </form>
+
+            <div class="description">
+                History:
+            </div>
+
+            <ul>
+                <li v-for="(item, index) in cafeHistory">
+                    <span>{{item.name}}</span>
+                    <span>{{item.city}}</span>
+                    <div v-on:click="deleteItemSure(item.name, cafeHistory, index)">Delete</div>
+                    <div v-on:click="recoverItem(item.name, cafeHistory, index)">Recover</div>
+                </li>
+            </ul>
+
+            <div class="description">
+                Partial layout reference to <a href="https://github.com/iamshaunjp/" target="_blank">The Net Ninja</a>
+            </div>
+        </div>
+
+        <!-- Firebase -->
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDVSElhnSpnojVOW5wHP-EPGfr_rayZj0A",
+                authDomain: "vue-share-10802247.firebaseapp.com",
+                databaseURL: "https://vue-share-10802247.firebaseio.com",
+                projectId: "vue-share-10802247",
+                storageBucket: "vue-share-10802247.appspot.com",
+                messagingSenderId: "1008732274530"
+            };
+            firebase.initializeApp(config);
+            const db = firebase.firestore();
+        </script>
+
+        <!-- My js -->
+        <script src="functions.js"></script>
+        <script src="index2.js"></script>
+    </body>
+</html>

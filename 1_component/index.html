@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <!-- Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-firestore.js"></script>
+
+        <!-- Vue.js -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.6/dist/vue.js"></script>
+
+        <link rel="stylesheet" href="styles.css">
+        <title>Cloud Cafe</title>
+    </head>
+    <body>
+
+        <h1>Cloud Cafe</h1>
+
+        <div id="app">
+            <div :is="component" @switch-mode="switchMode"></div>
+
+            <div class="description">
+                Partial layout reference to <a href="https://github.com/iamshaunjp/" target="_blank">The Net Ninja</a>
+            </div>
+        </div>
+
+        <!-- Firebase -->
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDVSElhnSpnojVOW5wHP-EPGfr_rayZj0A",
+                authDomain: "vue-share-10802247.firebaseapp.com",
+                databaseURL: "https://vue-share-10802247.firebaseio.com",
+                projectId: "vue-share-10802247",
+                storageBucket: "vue-share-10802247.appspot.com",
+                messagingSenderId: "1008732274530"
+            };
+            firebase.initializeApp(config);
+            const db = firebase.firestore();
+        </script>
+
+        <!-- My js -->
+        <script src="functions.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
